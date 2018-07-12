@@ -26,6 +26,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -36,8 +37,11 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id_product")
 public class Product_Exchange extends Product {
 
-    private BooleanProperty added = new SimpleBooleanProperty(false);
-    private IntegerProperty amount = new SimpleIntegerProperty(0);
+    @Type(type = "boolean")
+    private boolean added = false;
+    
+    @Type(type = "int")
+    private int amount = 0;
 
     @ManyToOne
     @JoinColumn(name = "id_price")
@@ -51,19 +55,19 @@ public class Product_Exchange extends Product {
         this.price = price;
     }
 
-    public BooleanProperty isAdded() {
+    public boolean isAdded() {
         return added;
     }
 
-    public void setAdded(BooleanProperty added) {
+    public void setAdded(boolean added) {
         this.added = added;
     }
 
-    public IntegerProperty getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(IntegerProperty amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

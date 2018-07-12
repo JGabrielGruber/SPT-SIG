@@ -21,16 +21,21 @@ import cache.Cache;
 import controller.Controller_Product_Buy;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,7 +44,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
+import javax.persistence.Parameter;
 import model.Person_Employee;
 import model.Person_Provider;
 import model.Product_Exchange;
@@ -131,9 +139,17 @@ public class Container_Product_Buy {
         tableColumn = new TableColumn("Quantia");
         tableColumn.setCellValueFactory(
                 new PropertyValueFactory("amount"));
-        tableColumn.setCellFactory(
-                TextFieldTableCell.<Product_Exchange, Number>forTableColumn(
-                        new NumberStringConverter()));
+        tableColumn.setCellFactory(TextFieldTableCell.forTableColumn(
+                new IntegerStringConverter()));
+        tableColumn.setOnEditCommit((event) -> {
+            TablePosition pos = tableView.getSelectionModel().getSelectedCells().get(0);
+            int row = pos.getRow();
+            Product_Exchange item = tableView.getItems().get(row);
+
+            TableColumn col = pos.getTableColumn();
+            System.out.println( "" + col.getCellObservableValue(item).getValue());
+            //tableView.getSelectionModel().getSelectedItem().setAmount();
+        });
         tableColumn.setEditable(true);
 
         columns.add(tableColumn);

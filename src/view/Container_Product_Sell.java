@@ -53,10 +53,10 @@ public class Container_Product_Sell {
     private GridPane gridPane;
     private TableView<Product_Exchange> tableView;
     private final ArrayList<TableColumn<Product_Exchange, ?>> columns = new ArrayList();
-    private final List<Product_Exchange> products = new ArrayList();
-    private final List<Person_Client> clients = new ArrayList();
-    private final List<Person_Provider> providers = new ArrayList();
-    private final List<Person_Employee> employees = new ArrayList();
+    private List<Product_Exchange> products = new ArrayList();
+    private List<Person_Client> clients = new ArrayList();
+    private List<Person_Provider> providers = new ArrayList();
+    private List<Person_Employee> employees = new ArrayList();
     private ObservableList<Product_Exchange> list_products;
     private ObservableList<Person_Client> list_clients;
     private ObservableList<Person_Employee> list_employees;
@@ -304,4 +304,21 @@ public class Container_Product_Sell {
     public List<Person_Employee> getEmployees() {
         return employees;
     }
+
+    public void setProducts(List<Product_Exchange> products) {
+        this.products = products;
+    }
+
+    public void setClients(List<Person_Client> clients) {
+        this.clients = clients;
+    }
+
+    public void setProviders(List<Person_Provider> providers) {
+        this.providers = providers;
+    }
+
+    public void setEmployees(List<Person_Employee> employees) {
+        this.employees = employees;
+    }
+
 }

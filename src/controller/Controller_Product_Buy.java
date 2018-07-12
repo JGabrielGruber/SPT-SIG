@@ -19,7 +19,9 @@ package controller;
 
 import cache.Cache;
 import gqbd.GQBD;
+import java.sql.Date;
 import java.util.ArrayList;
+import model.Order;
 import model.Order_Model_Purchase;
 import model.Person_Employee;
 import model.Person_Provider;
@@ -70,12 +72,12 @@ public class Controller_Product_Buy {
         container_Product_Buy.getButton_confirm().setOnAction((event) -> {
             ArrayList<Product_Exchange> products = new ArrayList();
             for (Product_Exchange product_Exchange : container_Product_Buy.getTableView().getItems()) {
-                if (product_Exchange.isAdded().get()
-                        || product_Exchange.getAmount().get() > 0) {
+                if (product_Exchange.isAdded()
+                        || product_Exchange.getAmount() > 0) {
                     products.add(product_Exchange);
                 }
             }
-            GQBD.insert_Order_Model_purchase(new Order_Model_Purchase(
+            Order_Model_Purchase order_Model_Purchase = new Order_Model_Purchase(
                     0,
                     (Person_Provider) container_Product_Buy.getComboBox_provider().getSelectionModel().getSelectedItem(),
                     (Person_Employee) container_Product_Buy.getComboBox_employee().getSelectionModel().getSelectedItem(),
@@ -83,7 +85,13 @@ public class Controller_Product_Buy {
                     0,
                     0,
                     "Compra",
-                    "Compra de produto Default"));
+                    "Compra de produto Default");
+            GQBD.insert_Order_Model_purchase(order_Model_Purchase);
+            GQBD.insert_order(new Order(0,
+                    order_Model_Purchase,
+                    new Date(System.currentTimeMillis()),
+                    0));
+            
             container_Product_Buy.getTableView().getItems().clear();
             container_Product_Buy.updateTable();
         });
